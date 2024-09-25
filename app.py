@@ -7,7 +7,7 @@ import torch
 
 
 dataset = load_dataset("images", trust_remote_code=True)
-image = dataset["test"]["image"][0]
+image = dataset["test"]["image"][3]
 
 # Load model directly
 from transformers import AutoImageProcessor, AutoModelForImageClassification
@@ -20,6 +20,5 @@ inputs = image_processor(image, return_tensors="pt")
 with torch.no_grad():
     logits = model(**inputs).logits
 
-# model predicts one of the 1000 ImageNet classes
 predicted_label = logits.argmax(-1).item()
 print(model.config.id2label[predicted_label])
